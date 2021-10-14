@@ -69,25 +69,53 @@ function agregarProducto() {
 
   //limpiar formulario
   limpiarFormulario();
+  //cargar el producto nuevo en la fila de la tabla
+  crearFilas(productoNuevo);
 
   //mostrar un mensaje al usuario
 
-  
   //mostrar el objeto en una tabla
 }
-
-
 
 function limpiarFormulario() {
   //limpia los value de mis input
   formulario.reset();
   //limpiar los estilos
-  codigo.classname = 'form-control';
-  //TAREA: RESETEAR  LAS CLASES DEL RESTO DE LOS INPUTS 
+  codigo.classname = "form-control";
+  cantidad.classname = "form-control";
+  url.classname = "form-control";
+  producto.classname = "form-control";
+  descripcion.classname = "form-control";
+  //TAREA: RESETEAR  LAS CLASES DEL RESTO DE LOS INPUTS
 }
 
-
-function cargarInicial(){
+function cargarInicial() {
   //traer los productos del localstorage si existieran sino dejar el arreglo vacio
-  listaProductos = JSON.parse(localStorage.getItem('arregloProductos')) || []
+  listaProductos = JSON.parse(localStorage.getItem("arregloProductos")) || [];
+
+
+  //si hay productos dentros del arreglo entonces lo muestra en la tabla
+  listaProductos.forEach((itemProducto)=>{
+//codigo que se ejecuta por cada elemento del arreglo
+crearFilas(itemProducto);
+  });
+  
+}
+
+function crearFilas(itemProducto) {
+  let tabla = document.querySelector("#tablaProducto");
+  console.log(itemProducto)
+  tabla.innerHTML += `
+<tr>
+  <th scope="row">${itemProducto.codigo}</th>
+  <td>${itemProducto.nombre}</td>
+  <td>${itemProducto.descripcion}</td>
+  <td>${itemProducto.cantidad}</td>
+  <td>${itemProducto.url}</td>
+  <td>
+    <button class="btn btn-warning">Editar</button>
+    <button class="btn btn-danger">Borrar</button>
+  </td>
+</tr>
+  `
 }
